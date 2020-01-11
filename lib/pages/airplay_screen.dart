@@ -10,7 +10,7 @@ class AirplayScreen extends StatelessWidget {
         title: Text('关于我们'),
       ),
       body: Center(
-        child: Text('AirplayScreen'),
+        child: Text('关于我们'),
       ),
     );
   }

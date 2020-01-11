@@ -67,7 +67,7 @@ class HomeScreen extends StatelessWidget {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text('摩营销'),
+        title: Text('营销摩方'),
       ),
       body: Stack(
         children: <Widget>[

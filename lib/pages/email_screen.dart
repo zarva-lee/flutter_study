@@ -9,6 +9,9 @@ class EmailScreen extends StatelessWidget {
       appBar: new AppBar(
         title: Text('产品服务'),
       ),
+      body: Center(
+        child: Text('产品服务'),
+      ),
     );
   }
 }
