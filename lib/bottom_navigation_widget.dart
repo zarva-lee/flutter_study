@@ -4,7 +4,7 @@ import 'pages/home_screen.dart';
 import 'pages/email_screen.dart';
 import 'pages/pages_screen.dart';
 import 'pages/airplay_screen.dart';
-import 'pages/try_alert_dialog.dart';
+// import 'pages/try_alert_dialog.dart';
 
 class BottomNavigationWidget extends StatefulWidget {
   BottomNavigationWidget({Key key}) : super(key: key);
