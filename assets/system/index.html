@@ -7,7 +7,21 @@
 </head>
 <body>
     测试本地页面
-    测试跳转 <a href="../5g101/index2.html">跳转B</a>
+    <button id="button" onclick="send()">触发事件</button>
+    测试跳转 <a href="./index2.html">跳转B</a>
+    测试跳转 <a href="./assets/system/index.html">跳转B2</a>
+    测试跳转 <a href="./assets/H5messageItem/index.html">跳转5g案例</a>
 
 </body>
+<script src="https://cdn.bootcdn.net/ajax/libs/vConsole/1.0.1/vconsole.min.js"></script>
+<script>
+    // 初始化
+    var vConsole = new VConsole();
+    console.log('Hello world');
+    window.onload = function (params) {
+        function send(params) {
+            alert(12312)
+        }
+    }
+  </script>
 </html>

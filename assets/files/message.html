@@ -1,0 +1,190 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,minimal-ui">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <link href="css/base.css" type="text/css" rel="stylesheet">
+    <link href="css/style.css" type="text/css" rel="stylesheet">
+    <style>
+        [v-cloak]{ display: none }
+    </style>
+</head>
+<body>
+<div class="wrapBox"  style="display: none">
+    <div class="header" v-clock>
+        <header class="mint-header">
+            <div class="mint-header-button is-left">
+                <div>
+                    <button class="mint-button mint-button--default mint-button--normal" @click="backFn()">
+                        <span class="mint-button-icon">
+                            <i class="mintui mintui-back"></i>
+                        </span>
+                        <label class="mint-button-text"></label>
+                    </button>
+                </div>
+            </div>
+            <h1 class="mint-header-title">{{titleName}}</h1>
+            <div class="mint-header-button is-right">
+                <div class="right">
+                    <button class="mint-button phone mint-button--default mint-button--normal">
+                        <label class="mint-button-text"></label>
+                    </button>
+                    <button class="mint-button mint-button--default mint-button--normal" style="float: right;"  @click="menuFn()">
+                        <span class="mint-button-icon">
+                            <i class="mintui mintui-more"></i>
+                        </span>
+                        <label class="mint-button-text"></label>
+                    </button>
+
+
+
+                    <div class="menu" v-if="menuShow">
+                        <ul>
+                            <!--<li><a href="#/helper" class="router-link-exact-active active">实时天气</a></li>-->
+                            <template v-for="(item,index) in btnArr">
+                                <template v-for="(subItem,subIndex) in item.suspension_data">
+                                    <!--<button class="mint-button mint-button&#45;&#45;default mint-button&#45;&#45;normal btn" :class="[tabIndex==index+'sub'+subIndex?'isActive':'']" @click="clickTab(subItem,index,subIndex)" v-if="subItem.suspension_name">-->
+                                    <!--<label class="mint-button-text">-->
+                                    <!--{{subItem.suspension_name}}-->
+                                    <!--</label>-->
+                                    <!--</button>-->
+                                    <li @click="clickTab(subItem,index,subIndex)" v-if="subItem.suspension_name">
+                                        {{subItem.suspension_name}}
+                                    </li>
+
+                                </template>
+                            </template>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div style="width: 100%; height: 100vh; position: absolute; top: 0px; display: none;"></div>
+    </div>
+    <div class="app-wrapper" @click="menuFns()">
+        <div style="width: 98%; margin: 0px auto;">
+            <div class="dialog-container">
+                <ul class="chat-list" :style="{height:chatHeight}">
+                    <p class="timetitle" v-html="self.timeWeek()"></p>
+                    <template v-for="(item,index) in confData">
+                        <li class="msg">
+                            <template v-if="item.cardType=='more'">
+                                <div class="msg_from multi_card">
+                                    <div class="wrap" infotype="1">
+                                        <div class="card"  v-for="(subItem,subIndex) in item.cardInfo">
+
+                                            <template v-if="subItem.card_face_type=='video'">
+                                                <img style="
+  position: absolute;" @click="videoFn($event)" class="cardImg" :src="subItem.smallimg_url" alt="">
+                                                <video controls :src="subItem.card_face"></video>
+                                            </template>
+                                            <template v-if="subItem.card_face_type=='img'">
+                                                <img class="cardImg" :src="subItem.card_face" alt="">
+                                            </template>
+
+
+                                            <div class="msg_content">
+                                                <!--<div class="title"></div>-->
+                                                <p class="content">{{subItem.card_title}}</p>
+                                            </div>
+                                            <button class="mint-button btn mint-button--default mint-button--normal" @click="clickGo(btnItem.card_button_info,btnItem)" v-for="(btnItem,btnIndex) in subItem.card_button">
+                                                <label class="mint-button-text">
+                                                    {{btnItem.card_button_word}}
+                                                </label>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                            <template v-if="item.cardType=='one'">
+                                <div class="msg_from">
+                                    <div class="card" v-for="(subItem,subIndex) in item.cardInfo">
+
+                                        <template v-if="subItem.card_face_type=='video'">
+                                            <!--<video :src="subItem.card_face"></video>-->
+                                            <img :src="subItem.smallimg_url" alt="">
+                                        </template>
+                                        <template v-if="subItem.card_face_type=='img'">
+                                            <img :src="subItem.card_face" alt="">
+                                        </template>
+
+                                        <div class="msg_content">
+                                            {{subItem.card_title}}
+                                        </div>
+                                        <button class="mint-button btn mint-button--default mint-button--normal" @click="clickGo(btnItem.card_button_info,btnItem)" v-for="(btnItem,btnIndex) in subItem.card_button">
+                                            <label class="mint-button-text">
+                                                {{btnItem.card_button_word}}
+                                            </label>
+                                        </button>
+                                    </div>
+                                </div>
+                            </template>
+                            <template v-if="item.type=='msgText'">
+                                <div class="msg_to">
+                                    <div>
+                                        {{item.text}}
+                                    </div>
+                                </div>
+                            </template>
+                            <template v-if="item.type=='msgTextAi'">
+                                <div class="msg_to_ai">
+                                    <div>
+                                        {{item.text}}
+                                    </div>
+                                </div>
+                            </template>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+            <iframe class="itemIframe" :src="iframeUrl" v-if="iframeShow">
+
+            </iframe>
+            <footer class="footer">
+                <div class="footerBox">
+                    <div class="footerCenter">
+                        <template v-for="(item,index) in btnArr">
+                            <template v-for="(subItem,subIndex) in item.suspension_data">
+                                <button class="mint-button mint-button--default mint-button--normal btn" :class="[tabIndex==index+'sub'+subIndex?'isActive':'']" @click="clickTab(subItem,index,subIndex)" v-if="subItem.suspension_name">
+                                    <label class="mint-button-text">
+                                        {{subItem.suspension_name}}
+                                    </label>
+                                </button>
+                            </template>
+                        </template>
+                    </div>
+
+                </div>
+                <div>
+                    <div class="footer-content"><input type="text" autocomplete="off" v-model="inputVal" placeholder="输入文字进行对话">
+                        <button class="mint-button mint-button--default mint-button--normal send-icon" @click="clickInput()">
+                            <label class="mint-button-text"></label>
+                        </button>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div class="wrap"></div>
+</div>
+<script type=text/javascript src="js/data.js"></script>
+<script type=text/javascript src="js/vue.min.js"></script>
+<script type=text/javascript src="js/jquery-1.8.3.min.js"></script>
+<script type=text/javascript src="js/index.js"></script>
+</body>
+<script type="text/javascript" src="https://cdn.bootcss.com/vConsole/3.3.0/vconsole.min.js"></script>
+
+<script>
+    // 初始化
+    // var vConsole = new VConsole();
+    console.log('Hello world');
+</script>
+</html>

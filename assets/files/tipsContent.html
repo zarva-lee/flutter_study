@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,minimal-ui">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <link href="css/base.css" type="text/css" rel="stylesheet">
+    <link href="css/style.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<div class="wrapBox" style="display: none" v-clock >
+    <div class="header">
+        <header class="mint-header">
+            <div class="mint-header-button is-left">
+                <div >
+                    <button class="mint-button mint-button--default mint-button--normal" @click="backFnIndex()"><span class="mint-button-icon"><i class="mintui mintui-back"></i></span> <label class="mint-button-text"></label></button>
+                </div>
+            </div>
+            <h1 class="mint-header-title">通知信息</h1>
+            <div class="mint-header-button is-right">
+                <div class="right">
+                    <button class="mint-button phone mint-button--default mint-button--normal">
+                        <label class="mint-button-text"></label>
+                    </button>
+                    <button class="mint-button mint-button--default mint-button--normal" style="float: right;"  @click="menuFn()">
+                        <span class="mint-button-icon">
+                            <i class="mintui mintui-more"></i>
+                        </span>
+                        <label class="mint-button-text"></label>
+                    </button>
+                    <div class="menu" v-if="menuShow">
+                        <ul>
+                            <li v-for="(item,index) in tipsContentData" @click="msgGo(item.type)">{{item.name}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div style="width: 100%; height: 100vh; position: absolute; top: 0px; display: none;"></div>
+    </div>
+    <div class="app-wrapper" style="overflow: hidden;" @click="menuFns()">
+        <div class="home-container">
+            <div class="mint-search" style="margin-top: 20px;">
+                <div class="mint-searchbar">
+                    <div class="mint-searchbar-inner"><i class="mintui mintui-search"></i> <input type="search" placeholder="搜索通知信息"  class="mint-searchbar-core">
+                    </div>
+                    <a class="mint-searchbar-cancel" style="display: none;">取消</a></div>
+                <div class="mint-search-list" style="display: none;">
+                    <div class="mint-search-list-warp"></div>
+                </div>
+            </div>
+            <ul class="cell-list">
+                <li class="cell" v-for="(item,index) in tipsContentData" @click="msgGo(item.type)">
+                    <a  class="mint-cell">
+                        <div class="mint-cell-left"></div>
+                        <div class="mint-cell-wrapper">
+                            <div class="mint-cell-title">
+                                <div class="cell-badge"><img :src="item.img" width="40" height="40">
+                                </div>
+                                <span class="mint-cell-text">{{item.name}}</span>
+                                <span class="mint-cell-label">{{item.text}}</span>
+                            </div>
+                            <div class="mint-cell-value"><span v-html="timeFn(index*3)"></span>
+                            </div>
+                        </div>
+                        <div class="mint-cell-right"></div>
+                    </a>
+                </li>
+                <!--<li class="cell">-->
+                    <!--<a href="message.html" class="mint-cell">-->
+                        <!--<div class="mint-cell-left"></div>-->
+                        <!--<div class="mint-cell-wrapper">-->
+                            <!--<div class="mint-cell-title">-->
+                                <!--<div class="cell-badge"><img src="./images/head.png" width="40" height="40">-->
+                                <!--</div>-->
+                                <!--<span class="mint-cell-text">国安特色商品</span>-->
+                                <!--<span class="mint-cell-label">国安特色商品国安特色商品国安特色商品国安特色商品</span>-->
+                            <!--</div>-->
+                            <!--<div class="mint-cell-value"><span v-html="timeFn()"></span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="mint-cell-right"></div>-->
+                    <!--</a>-->
+                <!--</li>-->
+            </ul>
+            <div style="font-size: 16px; text-align: center; line-height: 50px;">
+                4个服务号
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type=text/javascript src="js/vue.min.js"></script>
+<script type=text/javascript src="js/jquery-1.8.3.min.js"></script>
+<script>
+    var self;
+    var conVue = new Vue({
+        el: '.wrapBox',
+        data: {
+            menuShow:false,
+            tipsContentData:[
+                {
+                    img:'./images/logo1.png',
+                    name:'浙江爱奇艺',
+                    text:'爱奇艺，中国高品质视频娱乐服务提供者。2010年4月22日正式上线，秉承“悦享品质”的品牌口号，积极推动产品、技术、内容、营销等全方位创新，为用户提供丰富、高清、流畅的专业视频体验，致力于让人们平等、便捷地获得更多、更好的视频。爱奇艺已成功构建了包含电商、游戏、电影票等业务在内，连接人与服务的视频商业生态，引领视频网站商业模式的多元化发展。',
+                    type:'2'
+                },
+                {
+                    img:'./images/logo2.png',
+                    name:'去哪儿网',
+                    text:'去哪儿是中国领先的旅游搜索引擎，去哪儿是全球最大的中文在线旅行网站，创立于2005年2月，总部在北京。去哪儿网为消费者提供机票、酒店、会场、度假产品的实时搜索，并提供旅游产品团购以及其他旅游信息服务，为旅游行业合作伙伴提供在线技术、移动技术解决方案。',
+                    type:'0'
+                },
+                {
+                    img:'./images/logo3.png',
+                    name:'浙江手机营业厅',
+                    text:'面向浙江移动客户提供快捷话费充值、信息查询、业务办理等自助服务，可以通过手机营业厅便捷查话费、查流量、办业务，还能及时了解浙江移动最新优惠活动资讯。',
+                    type:'1'
+                },
+                {
+                    img:'./images/logo4.png',
+                    name:'浙江农信',
+                    text:'经营范围包括经营中国银行业监督管理委员会依照有关法律、行政法规和其他规定批准的业务，经营范围以批准文件所列的为准。',
+                    type:'3'
+                },
+            ]
+        },
+        created: function () {
+            self=this;
+        },
+        mounted: function () {
+            $('.wrapBox').show();
+        },
+        methods: {
+            menuFn:function(){
+                self.menuShow=!self.menuShow;
+            },
+            menuFns:function(){
+                self.menuShow=false;
+            },
+            msgGo: function (index) {
+                window.location.href = 'message.html?id=' + index
+            },
+            timeFn: function (num) {
+                var now = new Date();
+
+
+                var hh = now.getHours(); //时
+                var mm = (now.getMinutes()) % 60;  //分
+                if(mm-num<=0){
+                    mm='0'
+                }else{
+                    mm=mm-num
+                }
+                if ((now.getMinutes()) / 60 > 1) {
+                    hh += Math.floor((now.getMinutes()) / 60);
+                }
+                var clock='';
+                if (hh < 10) {
+                    clock += "0";
+                }
+                clock += hh + ":";
+                if (mm < 10) clock += '0';
+                clock += mm;
+                return clock
+            },
+            backFnIndex:function(){
+                window.location.href = './index.html';
+            },
+        }
+    })
+</script>
+<script type="text/javascript" src="https://cdn.bootcss.com/vConsole/3.3.0/vconsole.min.js"></script>
+
+<script>
+    // 初始化
+    // var vConsole = new VConsole();
+    console.log('Hello world');
+</script>
+</html>

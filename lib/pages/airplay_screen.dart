@@ -4,6 +4,7 @@ class AirplayScreen extends StatelessWidget {
   const AirplayScreen({Key key}) : super(key: key);
 
   @override
+  
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
