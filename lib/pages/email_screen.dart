@@ -51,6 +51,9 @@ class EmailScreen extends StatefulWidget {
 }
  
 class _EmailScreenState extends State<EmailScreen> {
+
+  var _controller;
+
   @override
   void initState() {
     super.initState();
@@ -70,14 +73,13 @@ class _EmailScreenState extends State<EmailScreen> {
         leading: new IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () => {
-
-                  //  Navigator.canGoBack(context)
-              // _controller.canGoBack().then((value) {
-              //   if (value) {
-              //     _controller.goBack();
-              //   } else {
-              //   }
-              // });
+              _controller.canGoBack().then((value) {
+                if (value) {
+                  _controller.goBack();
+                } else {
+                  return Navigator.pop(context);
+                }
+              })
           },
         ),
       ),
@@ -87,7 +89,7 @@ class _EmailScreenState extends State<EmailScreen> {
         javascriptMode: JavascriptMode.unrestricted,
         onPageFinished: (String value) {},
         onWebViewCreated: (WebViewController webViewController) {
-		        // _controller = WebViewController;
+		        _controller = WebViewController;
         },
       ),
     );

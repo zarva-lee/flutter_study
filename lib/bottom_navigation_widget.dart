@@ -98,8 +98,10 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
         });
   }
 
+  var _isVisible;
   @override
   void initState() {
+    _isVisible = false;
     list
       ..add(HomeScreen())
       ..add(EmailScreen())
@@ -112,16 +114,21 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
     return Scaffold(
       //脚手架
       body: list[_curIndex],
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          print(new DateTime.now());
-          cretaAlertDialog(context);
-        },
-        child: Icon(
-          Icons.blur_on,
-          color: Colors.white,
-        ),
+      floatingActionButton: Visibility( 
+        visible: _isVisible,
+        child: FloatingActionButton(
+          onPressed: () {
+            print(new DateTime.now());
+            cretaAlertDialog(context);
+          },
+          child: Icon(
+            Icons.blur_on,
+            color: Colors.white,
+          ),
+        ),     
       ),
+      
+      
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
@@ -164,6 +171,11 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
         currentIndex: _curIndex,
         onTap: (int index) {
           setState(() {
+            if(index == 1){
+              _isVisible = false;
+            }else{
+              _isVisible = true;
+            }
             _curIndex = index;
           });
         },
